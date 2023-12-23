@@ -15,7 +15,24 @@ In this project we want to focus on how to improve performance of fasttext model
 ## How to set up enviroment 
 1. Place all files that you downloaded in one folder
 2. Create virtual envoroment (you can use conda but we prefer pip)
+   MacOS and Linux
   ```
-  python3 - m venv .venv
+  python3 -m venv .venv
   ```
-3. 
+  Windows
+  ```
+  python -m venv .venv
+  ```
+3. Activate your enviroment
+   MacOS and Linux
+   ```
+   source .venv/bin/activate
+   ```
+   Windows
+   ```
+   .venv\Scripts\activate
+   ```
+4. Install all libraries that we were using
+   ```
+   pip install -r requirements.txt
+   ```
