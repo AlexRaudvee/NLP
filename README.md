@@ -4,4 +4,4 @@ In this project we want to focus on how to improve performance of fasttext model
 
 ## Description of files
 
-- [config.py] - in this file you will have to change the path to your data folder that we used 
+- [config.py] - (in this file you will have to change the path to your data folder that we used )
