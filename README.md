@@ -4,4 +4,18 @@ In this project we want to focus on how to improve performance of fasttext model
 
 ## Description of files
 
-- [config.py] - (in this file you will have to change the path to your data folder that we used )
+- **config.py** - in this file you will have to change the path to your data folder that we use
+- **data_loading.py** - in this file we are doing data loading of all dataframes that are avaliable
+- **exploration.ipynb** - in this jypiter notebook file we are doing first and basic analysis of the data that we have, and choose the data that we think is going to be valuable for our purpose
+- **functions.py** - in this file we are writing basic functions that we are going to use for preprocessing and for getting the results (train the model, tune the model, and bla bla bla)
+- **main.py** main file that we are going to use as final stage when applying model on the data and getting it performance (would be removed in future)
+- **preprocessing.py** - in this file we are doing preprocessing of the text from the dataframe that we choosed
+- **requirements.txt** - in this file you can observe all the libraries that we used for this project
+
+## How to set up enviroment 
+1. Place all files that you downloaded in one folder
+2. Create virtual envoroment (you can use conda but we prefer pip)
+  ```
+  python3 - m venv .venv
+  ```
+3. 
