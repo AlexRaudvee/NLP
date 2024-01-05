@@ -333,3 +333,5 @@ def multi_word_grouping(token_list: list) -> list:
         combined_tokens.extend(current_combined)
 
     return combined_tokens
+
+########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
