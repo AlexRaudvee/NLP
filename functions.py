@@ -334,4 +334,15 @@ def multi_word_grouping(token_list: list) -> list:
 
     return combined_tokens
 
+def tokenizer(text: str) -> list:
+    """
+    This function Tokenizes the text that we input\n
+    Parameters:\n
+    text: string which we want to tokenize\n
+    Returns:\n
+    list of tokens after tokenization 
+    """
+    tokens = nltk.word_tokenize(text)
+    return tokens
+
 ########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
