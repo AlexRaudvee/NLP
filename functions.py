@@ -31,7 +31,7 @@ def create_antonym_dictionary():
     return antonyms
 
 antonyms = create_antonym_dictionary()
-### functions for preprocessing the text
+########################## FUNCTIONS FOR PREPROCESSING OF THE TEXT ##########################
 
 def remove_url(text: str) -> str:
     """
@@ -270,3 +270,5 @@ def remove_emoji(text: str) -> str:
     text_without_emojis = emoji_pattern.sub(r'', text)
 
     return text_without_emojis
+
+########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
