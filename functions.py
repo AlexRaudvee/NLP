@@ -207,7 +207,7 @@ def stemmer(text, int_: int = 1) -> list:
             return stemmed_words_lancaster
         else:
             print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
-            raise NameError
+            raise NameError    
     elif type(text) == list:
         if int_ == 1:
             porter = PorterStemmer()
@@ -233,6 +233,7 @@ def stemmer(text, int_: int = 1) -> list:
         else:
             print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
             raise NameError
+        
     else:
         print(f'Check the text type input, your was: {text}')
         raise TypeError
