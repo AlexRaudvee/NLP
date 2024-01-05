@@ -302,6 +302,13 @@ def remove_emoji(text: str) -> str:
     return text_without_emojis
 
 def multi_word_grouping(token_list: list) -> list:
+    """
+    This function is grouping the tokens if neighbor tokens are both Nouns\n
+    Parameters:\n
+    token_list: list in which we want to group any neighbour tokens\n
+    Returns:\n
+    Original list (string), but with grouped tokens 
+    """
 
     # Initializing variables
     combined_tokens = []
