@@ -181,7 +181,7 @@ def lemmatizer(text):
         return lemmatized_words_list
 
 
-def stemmer(text: str, int_: int = 1) -> str:
+def stemmer(text, int_: int = 1) -> list:
     """
     This function applies 1 out of 3 stemming algorithms on the text\n
     Parameters:\n
@@ -192,21 +192,50 @@ def stemmer(text: str, int_: int = 1) -> str:
     """
 
     # Apply stemming using different algorithms
-    if int_ == 1:
-        porter = PorterStemmer()
-        stemmed_words_porter = [porter.stem(word) for word in text.split()]
-        return stemmed_words_porter
-    elif int_ == 2:
-        snowball = SnowballStemmer('english')
-        stemmed_words_snowball = [snowball.stem(word) for word in text.split()]
-        return stemmed_words_snowball
-    elif int_ == 3:
-        lancaster = LancasterStemmer()
-        stemmed_words_lancaster = [lancaster.stem(word) for word in text.split()]
-        return stemmed_words_lancaster
+    if type(text) == str:
+        if int_ == 1:
+            porter = PorterStemmer()
+            stemmed_words_porter = [porter.stem(word) for word in text.split()]
+            return stemmed_words_porter
+        elif int_ == 2:
+            snowball = SnowballStemmer('english')
+            stemmed_words_snowball = [snowball.stem(word) for word in text.split()]
+            return stemmed_words_snowball
+        elif int_ == 3:
+            lancaster = LancasterStemmer()
+            stemmed_words_lancaster = [lancaster.stem(word) for word in text.split()]
+            return stemmed_words_lancaster
+        else:
+            print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
+            raise NameError
+    elif type(text) == list:
+        if int_ == 1:
+            porter = PorterStemmer()
+            stemmed_words_porter = []
+            for word in text:
+                stemmed_word_porter = porter.stem(word[0])
+                stemmed_words_porter.append((stemmed_word_porter, word[1]))
+            return stemmed_words_porter
+        elif int_ == 2:
+            snowball = SnowballStemmer('english')
+            stemmed_words_snowball = []
+            for word in text:
+                stemmed_word_snowball = porter.stem(word[0])
+                stemmed_words_snowball.append((stemmed_word_snowball, word[1]))
+            return stemmed_words_snowball
+        elif int_ == 3:
+            lancaster = LancasterStemmer()
+            stemmed_words_lancaster = []
+            for word in text:
+                stemmed_word_lancaster = porter.stem(word[0])
+                stemmed_words_lancaster.append((stemmed_word_lancaster, word[1]))
+            return stemmed_words_lancaster
+        else:
+            print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
+            raise NameError
     else:
-        print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
-        raise NameError
+        print(f'Check the text type input, your was: {text}')
+        raise TypeError
 
 def word_expansion(text: str) -> str:
     """
