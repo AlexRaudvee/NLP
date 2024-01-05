@@ -327,7 +327,7 @@ def multi_word_grouping(token_list: list) -> list:
 
     # Handling the last combined tokens
     if len(current_combined) > 1:
-        combined_word = ''.join([t[0] for t in current_combined])
+        combined_word = ' '.join([t[0] for t in current_combined])
         combined_tokens.append((combined_word, current_combined[0][1]))
     else:
         combined_tokens.extend(current_combined)
