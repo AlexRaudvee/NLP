@@ -192,7 +192,7 @@ def stemmer(text, int_: int = 1) -> list:
     """
 
     # Apply stemming using different algorithms
-    if type(text) == str:
+    if type(text) is str:
         if int_ == 1:
             porter = PorterStemmer()
             stemmed_words_porter = [porter.stem(word) for word in text.split()]
@@ -208,7 +208,7 @@ def stemmer(text, int_: int = 1) -> list:
         else:
             print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
             raise NameError    
-    elif type(text) == list:
+    elif type(text) is list:
         if int_ == 1:
             porter = PorterStemmer()
             stemmed_words_porter = []
@@ -301,4 +301,28 @@ def remove_emoji(text: str) -> str:
 
     return text_without_emojis
 
-########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
+def multi_word_grouping(token_list: list) -> list:
+
+    # Initializing variables
+    combined_tokens = []
+    current_combined = []
+
+    for token, pos_tag in token_list:
+        if current_combined and (current_combined[-1][1] == 'NNP' or current_combined[-1][1] == 'NNPS') and (pos_tag == 'NNP' or pos_tag == 'NNPS'):
+            current_combined.append((token, pos_tag))
+        else:
+            if len(current_combined) > 1:
+                combined_word = ''.join([t[0] for t in current_combined])
+                combined_tokens.append((combined_word, current_combined[0][1]))
+            else:
+                combined_tokens.extend(current_combined)
+            current_combined = [(token, pos_tag)]
+
+    # Handling the last combined tokens
+    if len(current_combined) > 1:
+        combined_word = ''.join([t[0] for t in current_combined])
+        combined_tokens.append((combined_word, current_combined[0][1]))
+    else:
+        combined_tokens.extend(current_combined)
+
+    return combined_tokens
