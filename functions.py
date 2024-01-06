@@ -282,4 +282,64 @@ def tokenizer(text: str) -> list:
     """
     return nltk.word_tokenize(text)
 
+def func_prep_1(text) -> str:
+    return remove_emoji(remove_usernames(remove_hashtags(remove_url(text))))
+
+def func_prep_2(text) -> str:
+    return remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text))))
+
+def func_prep_3(text) -> str:
+    return handle_negation(correct_spelling(remove_upercase(remove_stop_words(text))))
+
+def func_prep_4(text: str) -> list[str]:
+    return tokenizer(lemmatizer(text))
+
+def func_prep_5(text: str) -> list[str]:
+    return tokenizer(stemmer(text))
+
+def fucn_prep_6(text: str) -> list[str]:
+    return tokenizer(word_expansion(text))
+
+def func_prep_7(text: str) -> list[str]:
+    return tokenizer(handle_negation(text))
+
+def func_prep_8(text: str) -> list[str]:
+    return multi_word_grouping(text)
+
+def func_prep_9(text: str) -> list[str]:
+    return tokenizer(lemmatizer(func_prep_1(text)))
+
+def func_prep_10(text: str) -> list[str]:
+    return tokenizer(lemmatizer(func_prep_2(text)))
+
+def func_prep_11(text: str) -> list[str]:
+    return tokenizer(lemmatizer(func_prep_3(text)))
+
+def func_prep_12(text: str) -> list[str]:
+    return tokenizer(stemmer(func_prep_1(text)))
+
+def func_prep_13(text: str) -> list[str]:
+    return tokenizer(stemmer(func_prep_2(text)))
+
+def func_prep_14(text: str) -> list[str]:
+    return tokenizer(stemmer(func_prep_3(text)))
+
+def func_prep_15(text: str) -> list[str]:
+    return tokenizer(word_expansion(func_prep_1(text)))
+
+def func_prep_16(text: str) -> list[str]:
+    return tokenizer(word_expansion(func_prep_2(text)))
+
+def func_prep_17(text: str) -> list[str]:
+    return tokenizer(word_expansion(func_prep_3(text)))
+
+def func_prep_18(text: str) -> list[str]:
+    return multi_word_grouping(func_prep_1(text))
+
+def func_prep_19(text: str) -> list[str]:
+    return multi_word_grouping(func_prep_2(text))
+
+def func_prep_20(text: str) -> list[str]:
+    return multi_word_grouping(func_prep_3(text))
+
 ########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
