@@ -48,10 +48,8 @@ def remove_url(text: str) -> str:
     """
 
     parsed = urlparse(text)
-    
+
     return text.replace(parsed.scheme + "://" + parsed.netloc, "")
-
-
 
 def remove_stop_words(text: str) -> str:
     """
@@ -71,7 +69,6 @@ def remove_stop_words(text: str) -> str:
 
     return ' '.join(filtered_text)
 
-
 def remove_emoji(text: str) -> str:
     """
     This function removes any emojis from the text\n
@@ -85,7 +82,6 @@ def remove_emoji(text: str) -> str:
 
     return emoji_pattern.sub(r'', text)
 
-
 def remove_punctuation(text: str) -> str:
     """
     This function takes in text from which it is going to remove any punctuation marks\n
@@ -96,7 +92,6 @@ def remove_punctuation(text: str) -> str:
     """
 
     return text.translate(str.maketrans('', '', string.punctuation))
-
 
 def remove_upercase(text: str) -> str:
     """
@@ -109,7 +104,6 @@ def remove_upercase(text: str) -> str:
 
     return text.lower()
 
-
 def remove_extra_whitespace(text: str) -> str:
     """
     This function removes any extra spaces from the text\n
@@ -119,7 +113,6 @@ def remove_extra_whitespace(text: str) -> str:
     String(text) which has no extra space between words 
     """
     return ' '.join(text.split())
-
 
 def remove_numbers(text: str) -> str:
     """
@@ -261,7 +254,7 @@ def handle_negation(text: str, antonym_dict: dict=antonyms) -> str:
     
     return ' '.join(tokens)
 
-def multi_word_grouping(text: list) -> list:
+def multi_word_grouping(text: str) -> list:
     """
     This function is grouping the tokens if neighbor tokens are both Nouns\n
     Parameters:\n
