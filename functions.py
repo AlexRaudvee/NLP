@@ -282,14 +282,23 @@ def tokenizer(text: str) -> list:
     """
     return nltk.word_tokenize(text)
 
-def flow_preprocessing_1(text) -> str:
+def flow_preprocessing_1_debug_use(text) -> str:
     return remove_emoji(remove_usernames(remove_hashtags(remove_url(text))))
 
-def flow_preprocessing_2(text) -> str:
+def flow_preprocessing_2_debug_use(text) -> str:
     return remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text))))
 
-def flow_preprocessing_3(text) -> str:
+def flow_preprocessing_3_debug_use(text) -> str:
     return handle_negation(correct_spelling(remove_upercase(remove_stop_words(text))))
+
+def flow_preprocessing_1(text) -> list[str]:
+    return tokenizer(remove_emoji(remove_usernames(remove_hashtags(remove_url(text)))))
+
+def flow_preprocessing_2(text) -> list[str]:
+    return tokenizer(remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text)))))
+
+def flow_preprocessing_3(text) -> list[str]:
+    return tokenizer(handle_negation(correct_spelling(remove_upercase(remove_stop_words(text)))))
 
 def flow_preprocessing_4(text: str) -> list[str]:
     return tokenizer(lemmatizer(text))
@@ -307,39 +316,39 @@ def flow_preprocessing_8(text: str) -> list[str]:
     return multi_word_grouping(text)
 
 def flow_preprocessing_9(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_1(text)))
+    return tokenizer(lemmatizer(flow_preprocessing_1_debug_use(text)))
 
 def flow_preprocessing_10(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_2(text)))
+    return tokenizer(lemmatizer(flow_preprocessing_2_debug_use(text)))
 
 def flow_preprocessing_11(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_3(text)))
+    return tokenizer(lemmatizer(flow_preprocessing_3_debug_use(text)))
 
 def flow_preprocessing_12(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_1(text)))
+    return tokenizer(stemmer(flow_preprocessing_1_debug_use(text)))
 
 def flow_preprocessing_13(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_2(text)))
+    return tokenizer(stemmer(flow_preprocessing_2_debug_use(text)))
 
 def flow_preprocessing_14(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_3(text)))
+    return tokenizer(stemmer(flow_preprocessing_3_debug_use(text)))
 
 def flow_preprocessing_15(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_1(text)))
+    return tokenizer(word_expansion(flow_preprocessing_1_debug_use(text)))
 
 def flow_preprocessing_16(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_2(text)))
+    return tokenizer(word_expansion(flow_preprocessing_2_debug_use(text)))
 
 def flow_preprocessing_17(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_3(text)))
+    return tokenizer(word_expansion(flow_preprocessing_3_debug_use(text)))
 
 def flow_preprocessing_18(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_1(text))
+    return multi_word_grouping(flow_preprocessing_1_debug_use(text))
 
 def flow_preprocessing_19(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_2(text))
+    return multi_word_grouping(flow_preprocessing_2_debug_use(text))
 
 def flow_preprocessing_20(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_3(text))
+    return multi_word_grouping(flow_preprocessing_3_debug_use(text))
 
 ########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
