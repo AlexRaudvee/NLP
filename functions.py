@@ -191,7 +191,7 @@ def lemmatizer(text):
     elif type(text) == list:
         lemmatizer = WordNetLemmatizer()
         tokens = nltk.word_tokenize(text)
-        
+
         return [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
 
 def stemmer(text, int_: int = 1) -> list:
@@ -208,16 +208,13 @@ def stemmer(text, int_: int = 1) -> list:
     if type(text) is str:
         if int_ == 1:
             porter = PorterStemmer()
-            stemmed_words_porter = [porter.stem(word) for word in text.split()]
-            return stemmed_words_porter
+            return [porter.stem(word) for word in text.split()]
         elif int_ == 2:
             snowball = SnowballStemmer('english')
-            stemmed_words_snowball = [snowball.stem(word) for word in text.split()]
-            return stemmed_words_snowball
+            return [snowball.stem(word) for word in text.split()]
         elif int_ == 3:
             lancaster = LancasterStemmer()
-            stemmed_words_lancaster = [lancaster.stem(word) for word in text.split()]
-            return stemmed_words_lancaster
+            return [lancaster.stem(word) for word in text.split()]
         else:
             print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
             raise NameError    
@@ -271,9 +268,7 @@ def handle_negation(text: str, antonym_dict: dict=antonyms) -> str:
             i += 1
         i += 1
     
-    updated_text = ' '.join(tokens)
-
-    return updated_text
+    return ' '.join(tokens)
 
 def multi_word_grouping(text: list) -> list:
     """
@@ -291,12 +286,7 @@ def multi_word_grouping(text: list) -> list:
         for np in list(doc.noun_chunks):
             retokenizer.merge(np)
 
-    tokens = []
-    # Extract named enti
-    for token in doc:
-        tokens.append(token.text)
-
-    return tokens
+    return [token.text for token in doc]
 
 def tokenizer(text: str) -> list:
     """
