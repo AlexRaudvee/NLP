@@ -73,6 +73,19 @@ def remove_stop_words(text: str) -> str:
 
     return filtered_text
 
+def remove_emoji(text: str) -> str:
+    """
+    This function removes any emojis from the text\n
+    Parameters:\n
+    text: string in which we want to remove any emojis\n
+    Returns:\n
+    Original text (string), but without emojis 
+    """
+    
+    emoji_pattern = re.compile(emoji.get_emoji_regexp())
+    text_without_emojis = emoji_pattern.sub(r'', text)
+
+    return text_without_emojis
 
 def remove_punctuation(text: str) -> str:
     """
@@ -177,14 +190,9 @@ def lemmatizer(text):
     
     elif type(text) == list:
         lemmatizer = WordNetLemmatizer()
-        lemmatized_words_list = []
-        for word in text:
-            word_lemmatized = lemmatizer.lemmatize(word[0], pos=wordnet.VERB)
-            word_tag = word[1]
-            lemmatized_words_list.append((word_lemmatized, word_tag))
-
-        return lemmatized_words_list
-
+        tokens = nltk.word_tokenize(text)
+        
+        return [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
 
 def stemmer(text, int_: int = 1) -> list:
     """
@@ -216,25 +224,13 @@ def stemmer(text, int_: int = 1) -> list:
     elif type(text) is list:
         if int_ == 1:
             porter = PorterStemmer()
-            stemmed_words_porter = []
-            for word in text:
-                stemmed_word_porter = porter.stem(word[0])
-                stemmed_words_porter.append((stemmed_word_porter, word[1]))
-            return stemmed_words_porter
+            return [porter.stem(word) for word in text] 
         elif int_ == 2:
             snowball = SnowballStemmer('english')
-            stemmed_words_snowball = []
-            for word in text:
-                stemmed_word_snowball = porter.stem(word[0])
-                stemmed_words_snowball.append((stemmed_word_snowball, word[1]))
-            return stemmed_words_snowball
+            return [snowball.stem(word) for word in text] 
         elif int_ == 3:
             lancaster = LancasterStemmer()
-            stemmed_words_lancaster = []
-            for word in text:
-                stemmed_word_lancaster = porter.stem(word[0])
-                stemmed_words_lancaster.append((stemmed_word_lancaster, word[1]))
-            return stemmed_words_lancaster
+            return [lancaster.stem(word) for word in text] 
         else:
             print("Check if the 'int_' parameter is correct there is only 3 Stemmers")
             raise NameError
@@ -279,20 +275,6 @@ def handle_negation(text: str, antonym_dict: dict=antonyms) -> str:
 
     return updated_text
 
-def remove_emoji(text: str) -> str:
-    """
-    This function removes any emojis from the text\n
-    Parameters:\n
-    text: string in which we want to remove any emojis\n
-    Returns:\n
-    Original text (string), but without emojis 
-    """
-    
-    emoji_pattern = re.compile(emoji.get_emoji_regexp())
-    text_without_emojis = emoji_pattern.sub(r'', text)
-
-    return text_without_emojis
-
 def multi_word_grouping(text: list) -> list:
     """
     This function is grouping the tokens if neighbor tokens are both Nouns\n
@@ -314,20 +296,6 @@ def multi_word_grouping(text: list) -> list:
     for token in doc:
         tokens.append(token.text)
 
-    return tokens
-
-def POS_tagging(text: str) -> list:
-    """
-    This function does POS tagging for the text that you put in and it automatically does the multi-word grouping\n
-    Parameters:\n
-    text: string in which we want to perform a POS tagging\n
-    Returns:\n
-    List of Tuples where in the tuple we have 1st values is the word and the 2nd value is the tag
-    """
-    tokens = nltk.word_tokenize(text)
-    pos_tags = nltk.pos_tag(tokens)
-    tokens = multi_word_grouping(pos_tags)
-    
     return tokens
 
 def tokenizer(text: str) -> list:
