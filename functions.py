@@ -4,6 +4,7 @@ import string
 import re
 import contractions
 import emoji
+import spacy
 
 from nltk.corpus import stopwords
 from urllib.parse import urlparse
@@ -31,6 +32,10 @@ def create_antonym_dictionary():
     return antonyms
 
 antonyms = create_antonym_dictionary()
+
+# Load the small English model from spacy for merging of noun tokens
+nlp = spacy.load("en_core_web_sm")
+
 ########################## FUNCTIONS FOR PREPROCESSING OF THE TEXT ##########################
 
 def remove_url(text: str) -> str:
@@ -288,38 +293,28 @@ def remove_emoji(text: str) -> str:
 
     return text_without_emojis
 
-def multi_word_grouping(token_list: list) -> list:
+def multi_word_grouping(text: list) -> list:
     """
     This function is grouping the tokens if neighbor tokens are both Nouns\n
     Parameters:\n
-    token_list: list in which we want to group any neighbour tokens\n
+    text: text in which we want to group any neighbour tokens\n
     Returns:\n
-    Original list (string), but with grouped tokens 
+    List (string), returns list with grouped tokens
     """
 
-    # Initializing variables
-    combined_tokens = []
-    current_combined = []
+    doc = nlp(text)
 
-    for token, pos_tag in token_list:
-        if current_combined and (current_combined[-1][1] == 'NNP' or current_combined[-1][1] == 'NNPS') and (pos_tag == 'NNP' or pos_tag == 'NNPS'):
-            current_combined.append((token, pos_tag))
-        else:
-            if len(current_combined) > 1:
-                combined_word = ''.join([t[0] for t in current_combined])
-                combined_tokens.append((combined_word, current_combined[0][1]))
-            else:
-                combined_tokens.extend(current_combined)
-            current_combined = [(token, pos_tag)]
+    # Merge consecutive noun phrases
+    with doc.retokenize() as retokenizer:
+        for np in list(doc.noun_chunks):
+            retokenizer.merge(np)
 
-    # Handling the last combined tokens
-    if len(current_combined) > 1:
-        combined_word = ' '.join([t[0] for t in current_combined])
-        combined_tokens.append((combined_word, current_combined[0][1]))
-    else:
-        combined_tokens.extend(current_combined)
+    tokens = []
+    # Extract named enti
+    for token in doc:
+        tokens.append(token.text)
 
-    return combined_tokens
+    return tokens
 
 def POS_tagging(text: str) -> list:
     """
