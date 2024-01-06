@@ -274,19 +274,6 @@ def handle_negation(text: str, antonym_dict: dict=antonyms) -> str:
 
     return updated_text
 
-def POS_tagging(text: str) -> list:
-    """
-    This function does POS tagging for the text that you put in\n
-    Parameters:\n
-    text: string in which we want to perform a POS tagging\n
-    Returns:\n
-    List of Tuples where in the tuple we have 1st values is the word and the 2nd value is the tag
-    """
-    tokens = nltk.word_tokenize(text)
-    pos_tags = nltk.pos_tag(tokens)
-
-    return pos_tags
-
 def remove_emoji(text: str) -> str:
     """
     This function removes any emojis from the text\n
@@ -333,6 +320,20 @@ def multi_word_grouping(token_list: list) -> list:
         combined_tokens.extend(current_combined)
 
     return combined_tokens
+
+def POS_tagging(text: str) -> list:
+    """
+    This function does POS tagging for the text that you put in and it automatically does the multi-word grouping\n
+    Parameters:\n
+    text: string in which we want to perform a POS tagging\n
+    Returns:\n
+    List of Tuples where in the tuple we have 1st values is the word and the 2nd value is the tag
+    """
+    tokens = nltk.word_tokenize(text)
+    pos_tags = nltk.pos_tag(tokens)
+    tokens = multi_word_grouping(pos_tags)
+    
+    return tokens
 
 def tokenizer(text: str) -> list:
     """
