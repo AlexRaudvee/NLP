@@ -48,9 +48,9 @@ def remove_url(text: str) -> str:
     """
 
     parsed = urlparse(text)
-    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    
+    return text.replace(parsed.scheme + "://" + parsed.netloc, "")
 
-    return text 
 
 
 def remove_stop_words(text: str) -> str:
@@ -69,9 +69,8 @@ def remove_stop_words(text: str) -> str:
 
     filtered_text = [word for word in words if word.lower() not in stop_words]
 
-    filtered_text = ' '.join(filtered_text)
+    return ' '.join(filtered_text)
 
-    return filtered_text
 
 def remove_emoji(text: str) -> str:
     """
@@ -83,9 +82,9 @@ def remove_emoji(text: str) -> str:
     """
     
     emoji_pattern = re.compile(emoji.get_emoji_regexp())
-    text_without_emojis = emoji_pattern.sub(r'', text)
 
-    return text_without_emojis
+    return emoji_pattern.sub(r'', text)
+
 
 def remove_punctuation(text: str) -> str:
     """
@@ -96,9 +95,8 @@ def remove_punctuation(text: str) -> str:
     Cleaned from punctuation marks string
     """
 
-    clean_text = text.translate(str.maketrans('', '', string.punctuation))
+    return text.translate(str.maketrans('', '', string.punctuation))
 
-    return clean_text
 
 def remove_upercase(text: str) -> str:
     """
@@ -109,9 +107,8 @@ def remove_upercase(text: str) -> str:
     Filtered out of upper case letters string 
     """
 
-    lowercase_text = text.lower()
+    return text.lower()
 
-    return lowercase_text
 
 def remove_extra_whitespace(text: str) -> str:
     """
@@ -121,9 +118,8 @@ def remove_extra_whitespace(text: str) -> str:
     Returns:\n
     String(text) which has no extra space between words 
     """
-    clean_text = ' '.join(text.split())
+    return ' '.join(text.split())
 
-    return clean_text
 
 def remove_numbers(text: str) -> str:
     """
@@ -133,8 +129,7 @@ def remove_numbers(text: str) -> str:
     Returns:\n
     String (text) which has no numbers in it
     """
-    text = re.sub(r'\d+', '', text)
-    return text
+    return re.sub(r'\d+', '', text)
 
 def remove_hashtags(text: str) -> str:
     """
@@ -144,8 +139,7 @@ def remove_hashtags(text: str) -> str:
     Returns:\n
     String (text) which has no hashtags in it 
     """
-    text = re.sub(r'#\w+\b', '', text)
-    return text
+    return re.sub(r'#\w+\b', '', text)
 
 def remove_usernames(text: str) -> str:
     """
@@ -155,8 +149,7 @@ def remove_usernames(text: str) -> str:
     Returns:\n
     String (text) which has no usernames in it 
     """
-    text = re.sub(r'@\w+\b', '', text)
-    return text
+    return re.sub(r'@\w+\b', '', text)
 
 def correct_spelling(text: str) -> str:
     """
@@ -167,9 +160,7 @@ def correct_spelling(text: str) -> str:
     String (text) which has correct spessing of the words
     """
 
-    text = check(text)
-
-    return text
+    return check(text)
 
 def lemmatizer(text):
     """
@@ -296,7 +287,6 @@ def tokenizer(text: str) -> list:
     Returns:\n
     list of tokens after tokenization 
     """
-    tokens = nltk.word_tokenize(text)
-    return tokens
+    return nltk.word_tokenize(text)
 
 ########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
