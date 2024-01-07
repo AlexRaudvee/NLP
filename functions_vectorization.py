@@ -8,14 +8,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.base import BaseEstimator, TransformerMixin
 from config import path_to_fast_text_model
-### model initialization 
-import gensim.downloader as api
 
 # Loads pre-trained word embedings model:
 word2vec_model = api.load("word2vec-google-news-300") # model trained on lower case words, use lower case tokens
 
 # Load the pre-trained FastText model
-model_path = 'cc.en.300.bin'
+model_path = path_to_fast_text_model
 fast_model = FastText.load_model(model_path)
 
 # Count based and frequency methods
