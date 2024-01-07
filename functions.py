@@ -3,7 +3,7 @@ import nltk
 import string
 import re
 import contractions
-import emoji
+import demoji
 import spacy
 
 from nltk.corpus import stopwords
@@ -77,10 +77,8 @@ def remove_emoji(text: str) -> str:
     Returns:\n
     Original text (string), but without emojis 
     """
-    
-    emoji_pattern = re.compile(emoji.get_emoji_regexp())
 
-    return emoji_pattern.sub(r'', text)
+    return demoji.replace(text, '')
 
 def remove_punctuation(text: str) -> str:
     """
