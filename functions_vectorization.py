@@ -60,6 +60,9 @@ class Word2VecVectorizer(BaseEstimator, TransformerMixin):
 
         return np.array(document_embeddings)
     
+    def __name__(self):
+        return "Word2VecVectorizer"
+    
 
 # glove
 
@@ -67,7 +70,7 @@ class Word2VecVectorizer(BaseEstimator, TransformerMixin):
 with open(glove_path, 'rb') as file:
     glove_300d = pickle.load(file)
 
-class Glove(BaseEstimator, TransformerMixin):
+class GloveVectorizer(BaseEstimator, TransformerMixin):
     def __init__(self, glove):
         self.glove = glove
 
@@ -82,8 +85,11 @@ class Glove(BaseEstimator, TransformerMixin):
         
         return np.array(document_embeddings)
     
+    def __name__(self):
+        return 'Glove'
     
-class FastText(BaseEstimator, TransformerMixin):
+    
+class FastTextVectorizer(BaseEstimator, TransformerMixin):
     def __init__(self, fast_text):
         self.fast_text = fast_text
 
@@ -97,31 +103,6 @@ class FastText(BaseEstimator, TransformerMixin):
                                for document in X]
         
         return np.array(document_embeddings)
-
-
-
-# Example data
-new_sentences = [["This", "is", "a", "new", "sentence"],["This", "is", "a", "new", "sentence"],["This", "is", "a", "new", "sentence"]]
-
-
-
-# pipeline = Pipeline([
-#     ('fast_text', FastText(fast_model)),
-#     # Add more steps to your pipeline as needed
-# ])
-
-# # Transform the data using the pipeline
-# transformed_data = pipeline.transform(new_sentences)
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    def __name__(self):
+        return "FastTextVectorizer"

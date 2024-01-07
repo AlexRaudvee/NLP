@@ -445,6 +445,19 @@ class TextPreprocessor_flow_7(BaseEstimator, TransformerMixin):
 
         return " ".join(tokens)
 
+class TextPreprocessor_flow_8(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_8(text=text)
+
+        return " ".join(tokens)
+
 class TextPreprocessor_flow_9(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
