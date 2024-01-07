@@ -6,12 +6,14 @@ import contractions
 import demoji
 import spacy
 
+from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 from urllib.parse import urlparse
 from autocorrect import Speller
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 from nltk.stem import PorterStemmer, SnowballStemmer, LancasterStemmer
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 # Download WordNet data (needed for lemmatization) and punkt for normal functioning of tokinizer and averaged perceptron tagger for POS tagging
@@ -349,4 +351,253 @@ def flow_preprocessing_19(text: str) -> list[str]:
 def flow_preprocessing_20(text: str) -> list[str]:
     return multi_word_grouping(flow_preprocessing_3_debug_use(text))
 
-########################## FUNCTIONS FOR VECTORIZATION OF THE TOKENS ##########################
+########################## TRANSLATE IN OOP WAY FOR FUTURE PIPELINES ##########################
+
+# Text Preprocessing Transformer
+class TextPreprocessor_flow_1(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_1(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_2(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_2(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_3(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_3(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_4(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_4(text=text)
+
+        return " ".join(tokens)
+    
+class TextPreprocessor_flow_5(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_5(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_6(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_6(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_7(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_8(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_9(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_9(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_10(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_10(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_11(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_11(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_12(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_12(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_13(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_13(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_14(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_14(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_15(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_15(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_16(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_16(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_17(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_17(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_18(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_18(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_19(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_19(text=text)
+
+        return " ".join(tokens)
+
+class TextPreprocessor_flow_20(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        tokens = flow_preprocessing_20(text=text)
+
+        return " ".join(tokens)
+
