@@ -6,7 +6,6 @@ import contractions
 import demoji
 import spacy
 
-from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 from urllib.parse import urlparse
 from autocorrect import Speller
@@ -39,6 +38,7 @@ antonyms = create_antonym_dictionary()
 nlp = spacy.load("en_core_web_sm")
 
 lemmatizer_ = WordNetLemmatizer()
+
 
 
 ########################## FUNCTIONS FOR PREPROCESSING OF THE TEXT ##########################
@@ -171,15 +171,10 @@ def lemmatizer(text):
         tokens = nltk.word_tokenize(text)
         
         # Lemmatize each word
-        lemmatized_words = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+        lemmatized_words = [lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens]
         
         return ' '.join(lemmatized_words)
-    
-    elif type(text) == list:
-        lemmatizer = WordNetLemmatizer()
-        tokens = nltk.word_tokenize(text)
 
-        return [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
 
 def stemmer(text, int_: int = 1) -> list:
     """
@@ -300,10 +295,44 @@ def flow_preprocessing_1_debug_use(text) -> str:
     return text
 
 def flow_preprocessing_2_debug_use(text) -> str:
-    return remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text))))
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation)) 
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
+
+    return text
 
 def flow_preprocessing_3_debug_use(text) -> str:
-    return handle_negation(correct_spelling(remove_upercase(remove_stop_words(text))))
+
+    # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    # Get English stopwords from NLTK
+    stop_words = set(stopwords.words('english'))
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text = ' '.join(filtered_text).lower()
+
+    text = check(text)
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    return ' '.join(tokens)
 
 def flow_preprocessing_1(text) -> list[str]:
     parsed = urlparse(text)
@@ -315,16 +344,48 @@ def flow_preprocessing_1(text) -> list[str]:
     text = re.sub(r'@\w+\b', '', text)
     # remove emoji
     text = demoji.replace(text, '')
-    # tokenize 
-    text = nltk.word_tokenize(text)
+    
+    return text
+
+def flow_preprocessing_2(text: str) -> list[str]:
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation))
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
 
     return text
 
-def flow_preprocessing_2(text) -> list[str]:
-    return tokenizer(remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text)))))
+# Get English stopwords from NLTK
+stop_words = set(stopwords.words('english'))
 
-def flow_preprocessing_3(text) -> list[str]:
-    return tokenizer(handle_negation(correct_spelling(remove_upercase(remove_stop_words(text)))))
+def flow_preprocessing_3(text: str) -> list[str]:
+
+    # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text =  ' '.join(filtered_text).lower()
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    text = ' '.join(tokens)
+
+    return text
 
 def flow_preprocessing_4(text: str) -> list[str]:
 
@@ -336,55 +397,321 @@ def flow_preprocessing_4(text: str) -> list[str]:
     return lemmatized_words
 
 def flow_preprocessing_5(text: str) -> list[str]:
-    return tokenizer(stemmer(text))
+    porter = PorterStemmer()
+    return [porter.stem(word) for word in text.split()]
 
 def flow_preprocessing_6(text: str) -> list[str]:
-    return tokenizer(word_expansion(text))
+    return contractions.fix(text).split()
 
 def flow_preprocessing_7(text: str) -> list[str]:
-    return tokenizer(handle_negation(text))
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    text = ' '.join(tokens)
+
+    return text
 
 def flow_preprocessing_8(text: str) -> list[str]:
-    return multi_word_grouping(text)
+    # multiword grouping
+    doc = nlp(text)
 
+    # Merge consecutive noun phrases
+    with doc.retokenize() as retokenizer:
+        for np in list(doc.noun_chunks):
+            retokenizer.merge(np)
+
+    tokens = [token.text for token in doc]
+
+    return ' '.join(tokens)
+    
 def flow_preprocessing_9(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_1_debug_use(text)))
+
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+
+    tokens = nltk.word_tokenize(text)
+        
+    # Lemmatize each word
+    lemmatized_words = [lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+    
+    text = ' '.join(lemmatized_words)
+
+    return text
 
 def flow_preprocessing_10(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_2_debug_use(text)))
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation))
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
+
+    tokens = nltk.word_tokenize(text)
+        
+    # Lemmatize each word
+    lemmatized_words = [lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+    
+    return " ".join(lemmatized_words)
 
 def flow_preprocessing_11(text: str) -> list[str]:
-    return tokenizer(lemmatizer(flow_preprocessing_3_debug_use(text)))
+
+        # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    # Get English stopwords from NLTK
+    stop_words = set(stopwords.words('english'))
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text =  ' '.join(filtered_text).lower()
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+        
+    # Lemmatize each word
+    lemmatized_words = [lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+    
+    return " ".join(lemmatized_words)
 
 def flow_preprocessing_12(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_1_debug_use(text)))
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+
+    porter = PorterStemmer()
+    text = [porter.stem(word) for word in text.split()]
+
+    return " ".join(text)
 
 def flow_preprocessing_13(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_2_debug_use(text)))
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation))
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
+
+    porter = PorterStemmer()
+    text = [porter.stem(word) for word in text.split()]
+
+    return " ".join(text)
 
 def flow_preprocessing_14(text: str) -> list[str]:
-    return tokenizer(stemmer(flow_preprocessing_3_debug_use(text)))
+    
+    # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    # Get English stopwords from NLTK
+    stop_words = set(stopwords.words('english'))
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text =  ' '.join(filtered_text).lower()
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    text = ' '.join(tokens)
+
+    porter = PorterStemmer()
+    text = [porter.stem(word) for word in text.split()]
+
+    return " ".join(text)
 
 def flow_preprocessing_15(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_1_debug_use(text)))
+
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+
+    # word expansion
+    text = contractions.fix(text)
+
+    return text
 
 def flow_preprocessing_16(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_2_debug_use(text)))
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation))
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
+
+    # word expansion
+    text = contractions.fix(text)
+
+    return text
 
 def flow_preprocessing_17(text: str) -> list[str]:
-    return tokenizer(word_expansion(flow_preprocessing_3_debug_use(text)))
+
+    # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    # Get English stopwords from NLTK
+    stop_words = set(stopwords.words('english'))
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text =  ' '.join(filtered_text).lower()
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    text = ' '.join(tokens)
+
+    # word expansion
+    text = contractions.fix(text)
+
+    return text
 
 def flow_preprocessing_18(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_1_debug_use(text))
+
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+
+    # multi word gouping
+    doc = nlp(text)
+
+    # Merge consecutive noun phrases
+    with doc.retokenize() as retokenizer:
+        for np in list(doc.noun_chunks):
+            retokenizer.merge(np)
+
+    text = [token.text for token in doc]
+
+    return " ".join(text)
 
 def flow_preprocessing_19(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_2_debug_use(text))
+
+    text = text.lower().translate(str.maketrans('', '', string.punctuation))
+
+    text = re.sub(r'\d+', '', text)
+
+    text = ' '.join(text.split())
+
+    # multi word gouping
+    doc = nlp(text)
+
+    # Merge consecutive noun phrases
+    with doc.retokenize() as retokenizer:
+        for np in list(doc.noun_chunks):
+            retokenizer.merge(np)
+
+    text = [token.text for token in doc]
+
+    return " ".join(text)
 
 def flow_preprocessing_20(text: str) -> list[str]:
-    return multi_word_grouping(flow_preprocessing_3_debug_use(text))
+        # Tokenize the text into words
+    words = nltk.word_tokenize(text)
+
+    # Get English stopwords from NLTK
+    stop_words = set(stopwords.words('english'))
+
+    filtered_text = [word for word in words if word.lower() not in stop_words]
+
+    text =  ' '.join(filtered_text).lower()
+
+    tokens = nltk.word_tokenize(text)
+    negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
+    
+    # Identify negation words and replace with antonyms
+    i = 0
+    while i < len(tokens):
+        if tokens[i].lower() in negation_words and i+1 < len(tokens):
+            negated_word = tokens[i+1].lower()
+            if negated_word in antonyms:
+                tokens[i] = antonyms[negated_word]
+                del tokens[i+1]
+            i += 1
+        i += 1
+    
+    text = ' '.join(tokens)
+
+    # multi word gouping
+    doc = nlp(text)
+
+    # Merge consecutive noun phrases
+    with doc.retokenize() as retokenizer:
+        for np in list(doc.noun_chunks):
+            retokenizer.merge(np)
+
+    text = [token.text for token in doc]
+
+    return " ".join(text)
 
 def flow_preprocessing_21(text: str) -> list[str]:
-    return tokenizer(text)
+    return text
 
 ########################## TRANSLATE IN OOP WAY FOR FUTURE PIPELINES ##########################
 
