@@ -38,6 +38,9 @@ antonyms = create_antonym_dictionary()
 # Load the small English model from spacy for merging of noun tokens
 nlp = spacy.load("en_core_web_sm")
 
+lemmatizer = WordNetLemmatizer()
+
+
 ########################## FUNCTIONS FOR PREPROCESSING OF THE TEXT ##########################
 
 def remove_url(text: str) -> str:
@@ -325,22 +328,12 @@ def flow_preprocessing_3(text) -> list[str]:
 
 def flow_preprocessing_4(text: str) -> list[str]:
 
-    if type(text) == str:
-        lemmatizer = WordNetLemmatizer()
-        tokens = nltk.word_tokenize(text)
-        
-        # Lemmatize each word
-        lemmatized_words = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
-        
-        text = ' '.join(lemmatized_words)
+    tokens = nltk.word_tokenize(text)
     
-    elif type(text) == list:
-        lemmatizer = WordNetLemmatizer()
-        tokens = nltk.word_tokenize(text)
-
-        text = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
-
-    return nltk.word_tokenize(text)
+    # Lemmatize each word
+    lemmatized_words = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+    
+    return lemmatized_words
 
 def flow_preprocessing_5(text: str) -> list[str]:
     return tokenizer(stemmer(text))
