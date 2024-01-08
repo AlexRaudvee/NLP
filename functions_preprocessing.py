@@ -398,13 +398,14 @@ def flow_preprocessing_4(text: str) -> list[str]:
 
 def flow_preprocessing_5(text: str) -> list[str]:
     porter = PorterStemmer()
-    return [porter.stem(word) for word in text.split()]
+    return " ".join([porter.stem(word) for word in text.split()])
 
 def flow_preprocessing_6(text: str) -> list[str]:
-    return contractions.fix(text).split()
+    return contractions.fix(text)
 
 def flow_preprocessing_7(text: str) -> list[str]:
-    tokens = nltk.word_tokenize(text)
+    tokens = text.split()
+
     negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
     
     # Identify negation words and replace with antonyms
@@ -649,7 +650,7 @@ def flow_preprocessing_18(text: str) -> list[str]:
 
     text = [token.text for token in doc]
 
-    return " ".join(text)
+    return text
 
 def flow_preprocessing_19(text: str) -> list[str]:
 
