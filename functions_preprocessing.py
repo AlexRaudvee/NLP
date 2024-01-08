@@ -283,7 +283,18 @@ def tokenizer(text: str) -> list:
     return nltk.word_tokenize(text)
 
 def flow_preprocessing_1_debug_use(text) -> str:
-    return remove_emoji(remove_usernames(remove_hashtags(remove_url(text))))
+
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+
+    return text
 
 def flow_preprocessing_2_debug_use(text) -> str:
     return remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text))))
@@ -292,7 +303,19 @@ def flow_preprocessing_3_debug_use(text) -> str:
     return handle_negation(correct_spelling(remove_upercase(remove_stop_words(text))))
 
 def flow_preprocessing_1(text) -> list[str]:
-    return tokenizer(remove_emoji(remove_usernames(remove_hashtags(remove_url(text)))))
+    parsed = urlparse(text)
+    # remove url
+    text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
+    # remove hashtags
+    text = re.sub(r'#\w+\b', '', text)
+    # remove usernames
+    text = re.sub(r'@\w+\b', '', text)
+    # remove emoji
+    text = demoji.replace(text, '')
+    # tokenize 
+    text = nltk.word_tokenize(text)
+
+    return text
 
 def flow_preprocessing_2(text) -> list[str]:
     return tokenizer(remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text)))))
@@ -301,7 +324,23 @@ def flow_preprocessing_3(text) -> list[str]:
     return tokenizer(handle_negation(correct_spelling(remove_upercase(remove_stop_words(text)))))
 
 def flow_preprocessing_4(text: str) -> list[str]:
-    return tokenizer(lemmatizer(text))
+
+    if type(text) == str:
+        lemmatizer = WordNetLemmatizer()
+        tokens = nltk.word_tokenize(text)
+        
+        # Lemmatize each word
+        lemmatized_words = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+        
+        text = ' '.join(lemmatized_words)
+    
+    elif type(text) == list:
+        lemmatizer = WordNetLemmatizer()
+        tokens = nltk.word_tokenize(text)
+
+        text = [lemmatizer.lemmatize(word, pos=wordnet.VERB) for word in tokens]
+
+    return nltk.word_tokenize(text)
 
 def flow_preprocessing_5(text: str) -> list[str]:
     return tokenizer(stemmer(text))
@@ -351,6 +390,9 @@ def flow_preprocessing_19(text: str) -> list[str]:
 def flow_preprocessing_20(text: str) -> list[str]:
     return multi_word_grouping(flow_preprocessing_3_debug_use(text))
 
+def flow_preprocessing_21(text: str) -> list[str]:
+    return tokenizer(text)
+
 ########################## TRANSLATE IN OOP WAY FOR FUTURE PIPELINES ##########################
 
 # Text Preprocessing Transformer
@@ -363,9 +405,7 @@ class TextPreprocessor_flow_1(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_1(text=text)
-
-        return " ".join(tokens)
+        return remove_emoji(remove_usernames(remove_hashtags(remove_url(text))))
 
 class TextPreprocessor_flow_2(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -376,9 +416,7 @@ class TextPreprocessor_flow_2(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_2(text=text)
-
-        return " ".join(tokens)
+        return remove_extra_whitespace(remove_numbers(remove_punctuation(remove_upercase(text))))
 
 class TextPreprocessor_flow_3(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -389,9 +427,7 @@ class TextPreprocessor_flow_3(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_3(text=text)
-
-        return " ".join(tokens)
+        return handle_negation(correct_spelling(remove_upercase(remove_stop_words(text))))
 
 class TextPreprocessor_flow_4(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -402,9 +438,7 @@ class TextPreprocessor_flow_4(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_4(text=text)
-
-        return " ".join(tokens)
+        return lemmatizer(text)
     
 class TextPreprocessor_flow_5(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -415,9 +449,7 @@ class TextPreprocessor_flow_5(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_5(text=text)
-
-        return " ".join(tokens)
+        return stemmer(text)
 
 class TextPreprocessor_flow_6(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -428,9 +460,7 @@ class TextPreprocessor_flow_6(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_6(text=text)
-
-        return " ".join(tokens)
+        return word_expansion(text)
 
 class TextPreprocessor_flow_7(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -441,9 +471,7 @@ class TextPreprocessor_flow_7(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_8(text=text)
-
-        return " ".join(tokens)
+        return handle_negation(text)
 
 class TextPreprocessor_flow_8(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -454,9 +482,7 @@ class TextPreprocessor_flow_8(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_8(text=text)
-
-        return " ".join(tokens)
+        return " ".join(multi_word_grouping(text))
 
 class TextPreprocessor_flow_9(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -467,9 +493,7 @@ class TextPreprocessor_flow_9(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_9(text=text)
-
-        return " ".join(tokens)
+        return lemmatizer(flow_preprocessing_1_debug_use(text))
 
 class TextPreprocessor_flow_10(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -480,9 +504,7 @@ class TextPreprocessor_flow_10(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_10(text=text)
-
-        return " ".join(tokens)
+        return lemmatizer(flow_preprocessing_2_debug_use(text))
 
 class TextPreprocessor_flow_11(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -493,9 +515,7 @@ class TextPreprocessor_flow_11(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_11(text=text)
-
-        return " ".join(tokens)
+        return lemmatizer(flow_preprocessing_3_debug_use(text))
 
 class TextPreprocessor_flow_12(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -506,9 +526,7 @@ class TextPreprocessor_flow_12(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_12(text=text)
-
-        return " ".join(tokens)
+        return stemmer(flow_preprocessing_1_debug_use(text))
 
 class TextPreprocessor_flow_13(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -519,9 +537,7 @@ class TextPreprocessor_flow_13(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_13(text=text)
-
-        return " ".join(tokens)
+        return stemmer(flow_preprocessing_2_debug_use(text))
 
 class TextPreprocessor_flow_14(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -532,9 +548,7 @@ class TextPreprocessor_flow_14(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_14(text=text)
-
-        return " ".join(tokens)
+        return stemmer(flow_preprocessing_3_debug_use(text))
 
 class TextPreprocessor_flow_15(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -545,9 +559,7 @@ class TextPreprocessor_flow_15(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_15(text=text)
-
-        return " ".join(tokens)
+        return word_expansion(flow_preprocessing_1_debug_use(text))
 
 class TextPreprocessor_flow_16(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -558,9 +570,7 @@ class TextPreprocessor_flow_16(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_16(text=text)
-
-        return " ".join(tokens)
+        return word_expansion(flow_preprocessing_2_debug_use(text))
 
 class TextPreprocessor_flow_17(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -571,9 +581,7 @@ class TextPreprocessor_flow_17(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_17(text=text)
-
-        return " ".join(tokens)
+        return word_expansion(flow_preprocessing_3_debug_use(text))
 
 class TextPreprocessor_flow_18(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -584,9 +592,7 @@ class TextPreprocessor_flow_18(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_18(text=text)
-
-        return " ".join(tokens)
+        return " ".join(multi_word_grouping(flow_preprocessing_1_debug_use(text)))
 
 class TextPreprocessor_flow_19(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -597,9 +603,7 @@ class TextPreprocessor_flow_19(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_19(text=text)
-
-        return " ".join(tokens)
+        return " ".join(multi_word_grouping(flow_preprocessing_2_debug_use(text)))
 
 class TextPreprocessor_flow_20(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
@@ -610,7 +614,16 @@ class TextPreprocessor_flow_20(BaseEstimator, TransformerMixin):
         return processed_text
 
     def preprocess_text(self, text):
-        tokens = flow_preprocessing_20(text=text)
+        return " ".join(multi_word_grouping(flow_preprocessing_3_debug_use(text)))
+    
+class TextPreprocessor_flow_21(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
 
-        return " ".join(tokens)
+    def transform(self, X):
+        processed_text = [self.preprocess_text(text) for text in X]
+        return processed_text
+
+    def preprocess_text(self, text):
+        return text
 
