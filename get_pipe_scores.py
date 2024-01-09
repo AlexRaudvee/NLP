@@ -64,5 +64,7 @@ for model in list_of_models:
                     csv_writer.writerow(input_in_the_file)
 
                 print(f'{preprocessed_data} {vectorizer.__name__} {model.__name__} finished and stored')
+
+                finished_.append(pipeline_name)
             else: 
                 continue
