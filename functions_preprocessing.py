@@ -403,10 +403,8 @@ def flow_preprocessing_4(text: str) -> list[str]:
     """
     tokens = nltk.word_tokenize(text)
     
-    # Lemmatize each word
-    lemmatized_words = [lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens]
-    
-    return lemmatized_words
+    # Lemmatize each word    
+    return " ".join([lemmatizer_.lemmatize(word, pos=wordnet.VERB) for word in tokens])
 
 def flow_preprocessing_5(text: str) -> list[str]:
     """
