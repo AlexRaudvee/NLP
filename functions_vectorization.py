@@ -7,7 +7,7 @@ from fasttext import FastText
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.base import BaseEstimator, TransformerMixin
-from config import path_to_fast_text_model, glove_path
+from config import path_to_fast_text_model
 
 # Loads pre-trained word embedings model:
 word2vec_model = api.load("word2vec-google-news-300") # model trained on lower case words, use lower case tokens
@@ -61,33 +61,7 @@ class Word2VecVectorizer(BaseEstimator, TransformerMixin):
         return np.array(document_embeddings)
     
     def __name__(self):
-        return "Word2VecVectorizer"
-    
-
-# glove
-
-# Load the glove_300d dictionary from the absolute file path
-with open(glove_path, 'rb') as file:
-    glove_300d = pickle.load(file)
-
-class GloveVectorizer(BaseEstimator, TransformerMixin):
-    def __init__(self, glove):
-        self.glove = glove
-
-    def fit(self, X, y=None):
-        # There is no reason for fittting as we are using a pretrained model, can be modified
-        return self
-
-    def transform(self, X):
-        # gets the token that are in the model
-        document_embeddings = [np.mean([self.glove[token] for token in document if token in self.glove], axis=0) 
-                               for document in X]
-        
-        return np.array(document_embeddings)
-    
-    def __name__(self):
-        return 'Glove'
-    
+        return "Word2VecVectorizer"  
     
 class FastTextVectorizer(BaseEstimator, TransformerMixin):
     def __init__(self, fast_text):

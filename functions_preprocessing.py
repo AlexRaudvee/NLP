@@ -6,6 +6,7 @@ import contractions
 import demoji
 import spacy
 
+from nltk import pos_tag
 from nltk.corpus import stopwords
 from urllib.parse import urlparse
 from autocorrect import Speller
