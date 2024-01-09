@@ -26,7 +26,7 @@ list_of_models = [RandomForestClassifier, LogisticRegression]
 
 
 # PIPELINES COBINATION AND IT'S SCORES FOR GENDER DATA
-
+finished_ = ['pipeline_/gender_df_preprocessed_0_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_1_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_2_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_3_TfidfVectorizer_RandomForestClassifier']
 file_path = "scores.csv"
 for model in list_of_models:
     for vectorizer in list_of_vectorizers:
@@ -34,32 +34,35 @@ for model in list_of_models:
 
             pipeline_name = f"pipeline_{preprocessed_data}_{vectorizer.__name__}_{model.__name__}"
 
-            pipeline = Pipeline([
-                                ('vectorizer', vectorizer()),
-                                ('model', model())
-                                ])
+            if pipeline_name not in finished_:
+                pipeline = Pipeline([
+                                    ('vectorizer', vectorizer()),
+                                    ('model', model())
+                                    ])
 
-            df = pd.read_json(f'{path_to_data_folder}{preprocessed_data}')
+                df = pd.read_json(f'{path_to_data_folder}{preprocessed_data}')
 
-            X = df[f'{df.columns[0]}'].tolist()
-            y = df[f'{df.columns[1]}'].tolist()
+                X = df[f'{df.columns[0]}'].tolist()
+                y = df[f'{df.columns[1]}'].tolist()
 
-            # Split the dataset into training and testing sets
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+                # Split the dataset into training and testing sets
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-            # fi the pipe
-            pipeline.fit(X_train, y_train)
+                # fi the pipe
+                pipeline.fit(X_train, y_train)
 
-            # Predict on the test set
-            y_pred = pipeline.predict(X_test)
+                # Predict on the test set
+                y_pred = pipeline.predict(X_test)
 
-            y_pred_proba = pipeline.predict_proba(X_test)[:, 1]
+                y_pred_proba = pipeline.predict_proba(X_test)[:, 1]
 
-            input_in_the_file = [pipeline_name, [f'Score: {pipeline.score(X_test, y_test)}', f'precision: {precision_score(y_test, y_pred)}', f'Recall: {recall_score(y_test, y_pred)}', f'ROC AUC: {roc_auc_score(y_test, y_pred_proba)}']]
+                input_in_the_file = [pipeline_name, [f'Score: {pipeline.score(X_test, y_test)}', f'precision: {precision_score(y_test, y_pred)}', f'Recall: {recall_score(y_test, y_pred)}', f'ROC AUC: {roc_auc_score(y_test, y_pred_proba)}']]
 
-            # Append new data to the CSV file
-            with open(file_path, 'a', newline='') as csv_file:
-                csv_writer = csv.writer(csv_file)
-                csv_writer.writerow(input_in_the_file)
+                # Append new data to the CSV file
+                with open(file_path, 'a', newline='') as csv_file:
+                    csv_writer = csv.writer(csv_file)
+                    csv_writer.writerow(input_in_the_file)
 
-            print(f'{file_path} {vectorizer.__name__} {model.__name__} finished and stored')
+                print(f'{preprocessed_data} {vectorizer.__name__} {model.__name__} finished and stored')
+            else: 
+                continue

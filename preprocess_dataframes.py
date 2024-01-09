@@ -150,5 +150,3 @@ jud_per_df = shuffle(pd.concat([minority_class, majority_class])).reset_index(dr
 
 gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_4(text))
 gender_df.to_json('gender_df_preprocessed_4')
-
-

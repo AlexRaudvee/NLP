@@ -1,1 +1,5 @@
 pipeline_name, pipeline_scores
+pipeline_/gender_df_preprocessed_0_TfidfVectorizer_RandomForestClassifier,"['Score: 0.7807774168253613', 'precision: 0.7600651617407493', 'Recall: 0.7791030534351145', 'ROC AUC: 0.8662775478207598']"
+pipeline_/gender_df_preprocessed_1_TfidfVectorizer_RandomForestClassifier,"['Score: 0.7805533773944214', 'precision: 0.7636363636363637', 'Recall: 0.771469465648855', 'ROC AUC: 0.866163915579129']"
+pipeline_/gender_df_preprocessed_2_TfidfVectorizer_RandomForestClassifier,"['Score: 0.7831298308502297', 'precision: 0.7589531680440771', 'Recall: 0.788645038167939', 'ROC AUC: 0.8679440196844999']"
+pipeline_/gender_df_preprocessed_3_TfidfVectorizer_RandomForestClassifier,"['Score: 0.776744707068444', 'precision: 0.7486993892784438', 'Recall: 0.7895992366412213', 'ROC AUC: 0.865701980742723']"
