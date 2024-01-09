@@ -148,29 +148,12 @@ jud_per_df = shuffle(pd.concat([minority_class, majority_class])).reset_index(dr
 
 # preprocess text and safe in file
 
-# gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_8(text))
-# gender_df.to_json('gender_df_preprocessed_8')
+gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_8(text))
+gender_df.to_json('gender_df_preprocessed_8')
 
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_13(text))
-gender_df.to_json('gender_df_preprocessed_13')
+# gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_19(text))
+# gender_df.to_json('gender_df_preprocessed_19')
 
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_14(text))
-gender_df.to_json('gender_df_preprocessed_14')
+# gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_20(text))
+# gender_df.to_json('gender_df_preprocessed_20')
 
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_15(text))
-gender_df.to_json('gender_df_preprocessed_15')
-
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_16(text))
-gender_df.to_json('gender_df_preprocessed_16')
-
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_17(text))
-gender_df.to_json('gender_df_preprocessed_17')
-
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_18(text))
-gender_df.to_json('gender_df_preprocessed_18')
-
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_19(text))
-gender_df.to_json('gender_df_preprocessed_19')
-
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_20(text))
-gender_df.to_json('gender_df_preprocessed_20')

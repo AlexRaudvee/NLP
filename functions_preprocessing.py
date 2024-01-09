@@ -335,6 +335,9 @@ def flow_preprocessing_3_debug_use(text) -> str:
     return ' '.join(tokens)
 
 def flow_preprocessing_1(text) -> list[str]:
+    """
+    remove url -> remove hashtags -> remove usernames -> remove emoji
+    """
     parsed = urlparse(text)
     # remove url
     text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
@@ -348,6 +351,9 @@ def flow_preprocessing_1(text) -> list[str]:
     return text
 
 def flow_preprocessing_2(text: str) -> list[str]:
+    """
+    lower casing -> remove punctuation -> remove numbers -> remove extra white spaces
+    """
 
     text = text.lower().translate(str.maketrans('', '', string.punctuation))
 
@@ -361,6 +367,9 @@ def flow_preprocessing_2(text: str) -> list[str]:
 stop_words = set(stopwords.words('english'))
 
 def flow_preprocessing_3(text: str) -> list[str]:
+    """
+    remove stop words -> lower casing -> replace negations by antonyms
+    """
 
     # Tokenize the text into words
     words = nltk.word_tokenize(text)
@@ -388,7 +397,9 @@ def flow_preprocessing_3(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_4(text: str) -> list[str]:
-
+    """
+    limatization of the words
+    """
     tokens = nltk.word_tokenize(text)
     
     # Lemmatize each word
@@ -397,13 +408,22 @@ def flow_preprocessing_4(text: str) -> list[str]:
     return lemmatized_words
 
 def flow_preprocessing_5(text: str) -> list[str]:
+    """
+    stemming of the words
+    """
     porter = PorterStemmer()
     return " ".join([porter.stem(word) for word in text.split()])
 
 def flow_preprocessing_6(text: str) -> list[str]:
+    """
+    expand the words and slang (lol -> lughing out loud)
+    """
     return contractions.fix(text)
 
 def flow_preprocessing_7(text: str) -> list[str]:
+    """
+    replace negation by antonyms
+    """
     tokens = text.split()
 
     negation_words = ['not', 'no', 'n\'t']  # Add more negation words as needed
@@ -424,6 +444,9 @@ def flow_preprocessing_7(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_8(text: str) -> list[str]:
+    """
+    multi-wrod grouping
+    """
     # multiword grouping
     doc = nlp(text)
 
@@ -437,7 +460,9 @@ def flow_preprocessing_8(text: str) -> list[str]:
     return ' '.join(tokens)
     
 def flow_preprocessing_9(text: str) -> list[str]:
-
+    """
+    remove urls -> remove hashtags -> remove usernames -> remove emoji -> lematize words
+    """
     parsed = urlparse(text)
     # remove url
     text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
@@ -458,7 +483,9 @@ def flow_preprocessing_9(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_10(text: str) -> list[str]:
-
+    """
+    lower casing -> remove punctuation -> remove numbers -> remove extra white spaces -> lematize words
+    """
     text = text.lower().translate(str.maketrans('', '', string.punctuation))
 
     text = re.sub(r'\d+', '', text)
@@ -473,8 +500,10 @@ def flow_preprocessing_10(text: str) -> list[str]:
     return " ".join(lemmatized_words)
 
 def flow_preprocessing_11(text: str) -> list[str]:
-
-        # Tokenize the text into words
+    """
+    remove stop words -> replace negation by antonyms -> lemmatization of words
+    """
+    # Tokenize the text into words
     words = nltk.word_tokenize(text)
 
     # Get English stopwords from NLTK
@@ -504,6 +533,9 @@ def flow_preprocessing_11(text: str) -> list[str]:
     return " ".join(lemmatized_words)
 
 def flow_preprocessing_12(text: str) -> list[str]:
+    """
+    remove urls -> remove hashtags -> remove usernames -> remove emoji -> stemming of the words
+    """
     parsed = urlparse(text)
     # remove url
     text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
@@ -520,7 +552,9 @@ def flow_preprocessing_12(text: str) -> list[str]:
     return " ".join(text)
 
 def flow_preprocessing_13(text: str) -> list[str]:
-
+    """
+    lower casing -> remove punctuation -> remove extra white spaces -> stemming of the words 
+    """
     text = text.lower().translate(str.maketrans('', '', string.punctuation))
 
     text = re.sub(r'\d+', '', text)
@@ -533,7 +567,9 @@ def flow_preprocessing_13(text: str) -> list[str]:
     return " ".join(text)
 
 def flow_preprocessing_14(text: str) -> list[str]:
-    
+    """
+    remove stop words -> replace negations by antonyms -> stemming of the words
+    """
     # Tokenize the text into words
     words = nltk.word_tokenize(text)
 
@@ -566,7 +602,9 @@ def flow_preprocessing_14(text: str) -> list[str]:
     return " ".join(text)
 
 def flow_preprocessing_15(text: str) -> list[str]:
-
+    """
+    remove urls -> remove hashtags -> remove usernames -> remove emojies -> word expansion 
+    """
     parsed = urlparse(text)
     # remove url
     text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
@@ -583,7 +621,9 @@ def flow_preprocessing_15(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_16(text: str) -> list[str]:
-
+    """
+    lower casing -> remove punctuation -> remove digits -> remove extra white spaces -> word expansion
+    """
     text = text.lower().translate(str.maketrans('', '', string.punctuation))
 
     text = re.sub(r'\d+', '', text)
@@ -596,7 +636,9 @@ def flow_preprocessing_16(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_17(text: str) -> list[str]:
-
+    """
+    remove stop words -> replace negations by antonyms -> word expansion
+    """
     # Tokenize the text into words
     words = nltk.word_tokenize(text)
 
@@ -629,7 +671,9 @@ def flow_preprocessing_17(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_18(text: str) -> list[str]:
-
+    """
+    remove urls -> remove hashtags -> remove usernames -> remove emojies -> multiword grouping 
+    """
     parsed = urlparse(text)
     # remove url
     text = text.replace(parsed.scheme + "://" + parsed.netloc, "")
@@ -653,7 +697,9 @@ def flow_preprocessing_18(text: str) -> list[str]:
     return text
 
 def flow_preprocessing_19(text: str) -> list[str]:
-
+    """
+    lowercasing -> remove punctuation -> remove extra white spaces -> multi word grouping 
+    """
     text = text.lower().translate(str.maketrans('', '', string.punctuation))
 
     text = re.sub(r'\d+', '', text)
@@ -673,7 +719,10 @@ def flow_preprocessing_19(text: str) -> list[str]:
     return " ".join(text)
 
 def flow_preprocessing_20(text: str) -> list[str]:
-        # Tokenize the text into words
+    """
+    remove stop words -> replace negation by antonyms -> multiword grouping 
+    """
+    # Tokenize the text into words
     words = nltk.word_tokenize(text)
 
     # Get English stopwords from NLTK
@@ -712,6 +761,9 @@ def flow_preprocessing_20(text: str) -> list[str]:
     return " ".join(text)
 
 def flow_preprocessing_21(text: str) -> list[str]:
+    """
+    no preprocessing 
+    """
     return text
 
 ########################## TRANSLATE IN OOP WAY FOR FUTURE PIPELINES ##########################
