@@ -4,18 +4,15 @@ import csv
 import pandas as pd
 import gensim.downloader as api
 
-from tqdm import tqdm
-from fasttext import FastText
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, precision_score, recall_score
-from config import path_to_data_folder, path_to_fast_text_model
+from config import path_to_data_folder
 
 ### LOAD THE MODELS
 word2vec_model = api.load("word2vec-google-news-300") # model trained on lower case words, use lower case tokens
-fast_model = FastText.load_model(path_to_fast_text_model)
 
 # make neccesary imports for preprocessing and vectorizatio
 from functions_vectorization import TfidfVectorizer, CountVectorizer, Word2VecVectorizer, FastTextVectorizer
