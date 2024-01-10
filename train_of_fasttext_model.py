@@ -1,10 +1,12 @@
 import os
 import fasttext
+
+import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import precision_recall_fscore_support as score
 from sklearn.metrics import accuracy_score
-import pandas as pd
 
 def preparing_data_fasttext(file_path: str, df: pd.DataFrame, col1: str, col0: str):
         """This function gets as an input file path to new text frame, which will be created from a data frame, while using 
