@@ -2,6 +2,46 @@
 
 In this repository we want to **compare** how **FastText** model **performance to** other **Models with different** **Preprocessing** and **Vecotrization** methods. In this work we are going to concentrate only on one task: **gender prediction**, it is related to high amount of time needed for preprocessing and fitting and testing the pipelines that we create, we tried lot's of ways to optimize, but here is the problem with models (they need sufficient amount of time for being trained). If this work is going to be interested for people, than we may continue with this work and as well check what is better for different purposes except gender prediction.
 
+## Description of Data
+
+For this project we used gender data, which is represented in two columns: post on reddit, female (0,1) - binary data basically. The wight of csv file was approximatelly 400Mb and after data cleaning represent 44000 different posts, the proportin of posts writted by males and females was equaly distributed (50-to-50 approximately), which leads to apprximately 22000 posts from males and 22000 posts from females.
+
+### Models used
+
+- **Logistic Regression model** from sklearn 
+- **Random Forest Classifier** from sklearn
+- **Support Vector Classifier** from sklearn
+- And finaly **FastText model** from FastText, this model doesn't require any vectorization, and runs pretty fast
+
+## Vectorization Methods Used 
+
+- **Tf-Idf Vectorizern** provided by sklearn
+- **Count Vecotorizer** as well provided by sklearn
+- **Word 2 Vec Vectorizer** provided by gensim, the vocabulary of the Vectorizer is from Google news
+
+## Preprocessing flows that we used 
+
+- **Flow 0** - without any preprocessing, just a pure text which is tokenized by pipeline
+- **Flow 1** - remove url -> remove hashtags -> remove usernames -> remove emoji 
+- **Flow 2** - lower casing -> remove punctuation -> remove numbers -> remove extra white spaces
+- **Flow 3** - remove stop words -> lower casing -> replace negations by antonyms
+- **Flow 4** - limatization of the words only
+- **Flow 5** - stemming of the words only
+- **Flow 6** - expand the words and slang (lol -> lughing out loud) 
+- **Flow 7** - replace negation by antonyms 
+- **Flow 8** - multi-wrod grouping (wasn't used in our case due to the high time complexity of method)
+- **Flow 9** - remove urls -> remove hashtags -> remove usernames -> remove emoji -> lematize words
+- **Flow 10** - lower casing -> remove punctuation -> remove numbers -> remove extra white spaces -> lematize words
+- **Flow 11** - remove stop words -> replace negation by antonyms -> lemmatization of words
+- **Flow 12** - remove urls -> remove hashtags -> remove usernames -> remove emoji -> stemming of the words
+- **Flow 13** - lower casing -> remove punctuation -> remove extra white spaces -> stemming of the words 
+- **Flow 14** - remove stop words -> replace negations by antonyms -> stemming of the words
+- **Flow 15** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> word expansion 
+- **Flow 16** - lower casing -> remove punctuation -> remove digits -> remove extra white spaces -> word expansion
+- **Flow 17** - remove stop words -> replace negations by antonyms -> word expansion
+- **Flow 18** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> multiword grouping (wasn't used in our case due to the high time complexity of method)
+- **Flow 19** - lowercasing -> remove punctuation -> remove extra white spaces -> multi word grouping (wasn't used in our case due to the high time complexity of method)
+- **Flow 20** - remove stop words -> replace negation by antonyms -> multiword grouping (wasn't used in our case due to the high time complexity of method)
 ## Description of files
 
 - **config.py** - in this file you will have to change the path to your data folder that we use.
