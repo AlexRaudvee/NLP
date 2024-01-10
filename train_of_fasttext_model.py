@@ -1,22 +1,38 @@
 import os
 import fasttext
-
-import pandas as pd
-
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import precision_recall_fscore_support as score
 from sklearn.metrics import accuracy_score
+import pandas as pd
+
+##################################################### IMPORTANT ########################################################################
+# Before running the script make sure that:
+# 1. variable "folder_path" (line 58) is defined, path should contain folders of prerpocessed data in JSON format.
+#    If training on different data sets, last charackter in the name of the file should be an unique number, in following format:
+#    "data_0", "data_preprocessed_10". EACH DATA FILE SHOULD END WITH A UNIQUE NUMBER, PREJUDICED WITH UNDERSCORE!
+#
+# 2. variable "file_path_train" (line 91) is defined, create a folder named "data_preprocessed_text", there all text files required for
+#    model training are going to be stored. These text files will be later called in (line 105).
+#
+# 3. variabe "inside_folder"  (line 98) is defined, create an unique folder that stores trained model on given data sets
+#
+# 4. name of the csv file with model performance is created, otherwise models'results will not be saved in a csv format
+# 
+# 5. In line 105 you can specify hyperparametrs when training the model, additional examples are commented
+#######################################################################################################################################
+ 
+
 
 def preparing_data_fasttext(file_path: str, df: pd.DataFrame, col1: str, col0: str):
-        """This function gets as an input file path to new text frame, which will be created from a data frame, while using 
+        """This function gets as an input file path to new text file, which will be created from a data frame, while using 
             tareget and predictor labels from the data set.
 
             Parameters: 
             file_path: str   -> it is a string which specifies where a text file with transformed data is going to be created. Make sure what 
-                         is activited.
+                                is activited.
             df: pd.DataFrame -> this data frame contains info from trainig or test data frame
-            col0: str        -> choses a column form data frame resposible for the text datda
+            col0: str        -> choses a column form data frame resposible for the text data
             col1: str        -> choses a column from data frame responsible for the label data
         """
         with open(file_path, 'w',encoding='utf-8') as file:
@@ -24,14 +40,15 @@ def preparing_data_fasttext(file_path: str, df: pd.DataFrame, col1: str, col0: s
                 text = f'__label__{row[col1]} {row[col0]}'
                 file.write(text + '\n')
 
-
+####################################### COLUMN DESCRIPTION OF EVALUATION DATA FRAME ###################################################
 # Specifies the name of columns in in data frame with main statistics, 
 # Preprocessing flow: indexes how given data set was preprocessed (different preprocessing methods applied in differnrt combinations)
 # Precison: Evaluates the precision of the model
 # Recall: Evaluete the recall of the model
 # F1: Evaluates the F1 statistic of the model
 # ROC_AUC: Evaluates the ROC_AUC of the model
-
+#######################################################################################################################################
+                
 columns: list[str] = ['Preprocessing flow', 'Accuracy', 'Precision', 'Recall', "F1", 'ROC_AUC']
 
 # Data frame describing every trained model
@@ -77,7 +94,7 @@ for file_index in range(count_files):
     if not os.path.isfile(file_path_train):
         preparing_data_fasttext(file_path_train, df_train, df.columns[1], df.columns[0])
 
-    # specifien in what folder with models newly modles will be created
+    # specifien in what folder with models newly modeles will be saved
     inside_folder = "\\model_raw"
 
     # path where the model will be saved
@@ -91,7 +108,7 @@ for file_index in range(count_files):
         model =  fasttext.load_model(save_path)
 
     # predicts labels for the test data
-    y_predicted = [int(model.predict(text)[0][0][-1] )for text in X_test]
+    y_predicted = [int(model.predict(text)[0][0][-1])for text in X_test]
 
     # computes precision, recall fscore and support of the model (support not included in final evaluation)
     precision, recall, fscore, support= score(y_test, y_predicted)
@@ -111,5 +128,6 @@ for file_index in range(count_files):
     stats_df = pd.concat([stats_df, row_df], ignore_index=True)
 
     print(f'{file_index}') # keeps track of models are being created
+
 
 stats_df.to_csv("fasttext_results_raw_model.csv") # convert result data frame to csv for later anaysis
