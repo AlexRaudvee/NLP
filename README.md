@@ -5,7 +5,7 @@ In this repository we want to **compare** how **FastText** model **performance t
 ## Description of files
 
 - **config.py** - in this file you will have to change the path to your data folder that we use.
-- **functions_preprocessing.py** - this file consists of all functions that we used for preprocessing, there you can find detailed description of what different flows stand for and in which way we did preprocessed the data.
+- **functions_preprocessing.py** - this file consists of all functions that we used for preprocessing, there you can find detailed description of what different flows stand for and in which way we did preprocessing of the data.
 - **functions_vectorization.py** - in this file you can observe all functions that we used for vectorization in our pipelines.
 - **preprocess_dataframes.py** - this file was used for running different preprocessing flows on the data and saving in separate json file, so the pipelines in future suppose to work faster, and will not loose the progress of work that was done.
 - **get_pipe_scores.py** - in this file we did the template script for creating the pipelines with different combination of preprocessing and vectorization and model, then we fit them and test in the same script and save step by step in the csv file.
