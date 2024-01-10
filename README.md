@@ -47,9 +47,9 @@ In this repository we want to **compare** how **FastText** model **performance t
 8. If you still have problems with running the code you can contact us or welcome into the StackOverFlow :))).
 
 ## Where to get the preprocessed data and initial data
-1. Initial data can not be presenteed as we have obligation to not spread the dataset that we used, so it is impossible to get initial data :(
-2.  Preprocessed data: We are not sure if our obligation affects the fact that we cannot spread preprocessed data as well, so we would like to keep this data away from the public.
+1. Initial data can not be presented as we have obligation to not spread the dataset that we used, so it is impossible to get initial data :(
+2. Preprocessed data: We are not sure if our obligation affects the preprocessed data as well, so we would like to keep this data away from the public.
 
 # Where to load the models that we used
-First of all, after tests we discovered that the models will load automaticaly so keep in mind that you may need enough space for these models 
+After tests we discovered that the models will load automaticaly so keep in mind that you may need enough space for these models. (approximatey 10GB)
 
