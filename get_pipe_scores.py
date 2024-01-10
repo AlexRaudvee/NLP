@@ -20,19 +20,23 @@ fast_model = FastText.load_model(path_to_fast_text_model)
 # make neccesary imports for preprocessing and vectorizatio
 from functions_vectorization import TfidfVectorizer, CountVectorizer, Word2VecVectorizer, FastTextVectorizer
 
-list_of_preprocessed_data = ['/gender_df_preprocessed_0', '/gender_df_preprocessed_1', "/gender_df_preprocessed_2", '/gender_df_preprocessed_3', '/gender_df_preprocessed_4', '/gender_df_preprocessed_5', '/gender_df_preprocessed_6', '/gender_df_preprocessed_7', '/gender_df_preprocessed_9', '/gender_df_preprocessed_10', '/gender_df_preprocessed_11', '/gender_df_preprocessed_12', '/gender_df_preprocessed_13', '/gender_df_preprocessed_14', '/gender_df_preprocessed_15', '/gender_df_preprocessed_16', '/gender_df_preprocessed_17', '/gender_df_preprocessed_18']
+list_of_preprocessed_data = ['gender_df_preprocessed_0', 'gender_df_preprocessed_1', "gender_df_preprocessed_2", 'gender_df_preprocessed_3', 'gender_df_preprocessed_4', 'gender_df_preprocessed_5', 'gender_df_preprocessed_6', 'gender_df_preprocessed_7', 'gender_df_preprocessed_9', 'gender_df_preprocessed_10', 'gender_df_preprocessed_11', 'gender_df_preprocessed_12', 'gender_df_preprocessed_13', 'gender_df_preprocessed_14', 'gender_df_preprocessed_15', 'gender_df_preprocessed_16', 'gender_df_preprocessed_17', 'gender_df_preprocessed_18']
 list_of_vectorizers = [TfidfVectorizer]
 list_of_models = [RandomForestClassifier, LogisticRegression]
 
 
 # PIPELINES COBINATION AND IT'S SCORES FOR GENDER DATA
-finished_ = ['pipeline_/gender_df_preprocessed_0_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_1_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_2_TfidfVectorizer_RandomForestClassifier', 'pipeline_/gender_df_preprocessed_3_TfidfVectorizer_RandomForestClassifier']
+df = pd.read_csv('scores.csv', header=None, names=['pipeline_name', 'pipeline_scores'])
+
+# Extract the pipeline names
+finished_ = df['pipeline_name'].tolist()
+
 file_path = "scores.csv"
 for model in list_of_models:
     for vectorizer in list_of_vectorizers:
         for preprocessed_data in list_of_preprocessed_data:
 
-            pipeline_name = f"pipeline_{preprocessed_data}_{vectorizer.__name__}_{model.__name__}"
+            pipeline_name = f"pipeline_{preprocessed_data}_{vectorizer.__name__}_{model.__name__}_2N"
 
             if pipeline_name not in finished_:
                 pipeline = Pipeline([
@@ -40,7 +44,7 @@ for model in list_of_models:
                                     ('model', model())
                                     ])
 
-                df = pd.read_json(f'{path_to_data_folder}{preprocessed_data}')
+                df = pd.read_json(f'{path_to_data_folder}/{preprocessed_data}.json')
 
                 X = df[f'{df.columns[0]}'].tolist()
                 y = df[f'{df.columns[1]}'].tolist()
@@ -63,7 +67,7 @@ for model in list_of_models:
                     csv_writer = csv.writer(csv_file)
                     csv_writer.writerow(input_in_the_file)
 
-                print(f'{preprocessed_data} {vectorizer.__name__} {model.__name__} finished and stored')
+                print(f'{preprocessed_data} {vectorizer.__name__} {model.__name__} N2 finished and stored')
 
                 finished_.append(pipeline_name)
             else: 

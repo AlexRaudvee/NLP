@@ -148,5 +148,10 @@ jud_per_df = shuffle(pd.concat([minority_class, majority_class])).reset_index(dr
 
 # preprocess text and safe in file
 
-gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_4(text))
-gender_df.to_json('gender_df_preprocessed_4')
+# we had more lines here but during to the process we deleted them (you do not need to run this code because all the preprocessed data is going to be available somewhere)
+
+gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_15(text))
+gender_df.to_json('gender_df_preprocessed_15.json', orient='records')
+
+gender_df['post'] = gender_df['post'].progress_apply(lambda text: flow_preprocessing_16(text))
+gender_df.to_json('gender_df_preprocessed_16.json', orient='records')
