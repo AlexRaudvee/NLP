@@ -50,6 +50,7 @@ For this project we used gender data, which is represented in two columns: post 
 - **preprocess_dataframes.py** - this file was used for running different preprocessing flows on the data and saving in separate json file, so the pipelines in future suppose to work faster, and will not loose the progress of work that was done.
 - **get_pipe_scores.py** - in this file we did the template script for creating the pipelines with different combination of preprocessing and vectorization and model, then we fit them and test in the same script and save step by step in the csv file.
 - **results_extraction.py** - this file was used for extraction of the result from the csv files with results, we preprocess dataframes, taking out the best scores and combinations of preprocessing and vectorization.
+- **train_fastext_model.py** - in this file you can find the script that we used to train and text the FastText model.
 - **dataset_exploration.ipynb** - in this file we clean the initial data, this code repeats in **preprocessing_dataframse.py** as well.
 - **debug_and_test.ipynb** - this file was used for experimenting, fising errors and debugging some code in above mentioned files. Don't look there, please;) (we don't want be responsible for your bleeding eyes).
 - **presenting_results.ipynb** - in this file you can opbserve cool results tha we got after our looooooong work.
