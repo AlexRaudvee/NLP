@@ -1,6 +1,6 @@
 # FastText Model Performance Compare to Traditional Techiques
 
-In this repository we want to **compare** how **FastText** model **performance to** other **Models with different** **Preprocessin** and **Vecotrization** methods. In this work we are going to concentrate only on one task: **gender prediction**, it is related to high amount of time needed for preprocessing and fitting and testing the pipelines that we create, we tried lot's of ways to optimize, but here is the problem with models (they need sufficient amount of time for being trained). If this work is going to be interested for people, than we may continue with this work and as well check what is better for different purposes except gender prediction.
+In this repository we want to **compare** how **FastText** model **performance to** other **Models with different** **Preprocessing** and **Vecotrization** methods. In this work we are going to concentrate only on one task: **gender prediction**, it is related to high amount of time needed for preprocessing and fitting and testing the pipelines that we create, we tried lot's of ways to optimize, but here is the problem with models (they need sufficient amount of time for being trained). If this work is going to be interested for people, than we may continue with this work and as well check what is better for different purposes except gender prediction.
 
 ## Description of files
 
