@@ -44,7 +44,7 @@ In this repository we want to **compare** how **FastText** model **performance t
    ```
 6. Before you are going to run the code you will have to specify path to the data folder in **config.py** file.
 7. Thank you for attention to this repository, have fun while playing around with our code and experiments!:)
-8. If you still have problems with running the code you can contact us or welcome into the StuckOverFlow :))).
+8. If you still have problems with running the code you can contact us or welcome into the StackOverFlow :))).
 
 ## Where to get the preprocessed data and initial data
 1. Initial data can not be presenteed as we have obligation to not spread the dataset that we used, so it is impossible to get initial data :(
