@@ -17,7 +17,7 @@ word2vec_model = api.load("word2vec-google-news-300") # model trained on lower c
 # make neccesary imports for preprocessing and vectorizatio
 from functions_vectorization import TfidfVectorizer, CountVectorizer, Word2VecVectorizer, FastTextVectorizer
 
-list_of_preprocessed_data = ['gender_df_preprocessed_0', 'gender_df_preprocessed_1', "gender_df_preprocessed_2", 'gender_df_preprocessed_3', 'gender_df_preprocessed_4', 'gender_df_preprocessed_5', 'gender_df_preprocessed_6', 'gender_df_preprocessed_7', 'gender_df_preprocessed_9', 'gender_df_preprocessed_10', 'gender_df_preprocessed_11', 'gender_df_preprocessed_12', 'gender_df_preprocessed_13', 'gender_df_preprocessed_14', 'gender_df_preprocessed_15', 'gender_df_preprocessed_16', 'gender_df_preprocessed_17', 'gender_df_preprocessed_18']
+list_of_preprocessed_data = ['gender_df_preprocessed_0', 'gender_df_preprocessed_1', "gender_df_preprocessed_2", 'gender_df_preprocessed_3', 'gender_df_preprocessed_4', 'gender_df_preprocessed_5', 'gender_df_preprocessed_6', 'gender_df_preprocessed_7', 'gender_df_preprocessed_9', 'gender_df_preprocessed_10', 'gender_df_preprocessed_11', 'gender_df_preprocessed_12', 'gender_df_preprocessed_13', 'gender_df_preprocessed_14', 'gender_df_preprocessed_15', 'gender_df_preprocessed_16', 'gender_df_preprocessed_17']
 list_of_vectorizers = [TfidfVectorizer]
 list_of_models = [RandomForestClassifier, LogisticRegression]
 
