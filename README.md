@@ -6,7 +6,7 @@ In this repository we want to **compare** how **FastText** model **performance t
 
 For this project we used gender data, which is represented in two columns: post on reddit, female (0,1) - binary data basically. The wight of csv file was approximatelly 400Mb and after data cleaning represent 44000 different posts, the proportin of posts writted by males and females was equaly distributed (50-to-50 approximately), which leads to apprximately 22000 posts from males and 22000 posts from females.
 
-### Models used
+## Models used
 
 - **Logistic Regression model** from sklearn 
 - **Random Forest Classifier** from sklearn
