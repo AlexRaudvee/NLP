@@ -21,28 +21,28 @@ For this project we used gender data, which is represented in two columns: post 
 
 ## Preprocessing flows that we used 
 
-- **Flow 0** - without any preprocessing, just a pure text which is tokenized by pipeline
-- **Flow 1** - remove url -> remove hashtags -> remove usernames -> remove emoji 
-- **Flow 2** - lower casing -> remove punctuation -> remove numbers -> remove extra white spaces
-- **Flow 3** - remove stop words -> lower casing -> replace negations by antonyms
-- **Flow 4** - limatization of the words only
-- **Flow 5** - stemming of the words only
-- **Flow 6** - expand the words and slang (lol -> lughing out loud) 
-- **Flow 7** - replace negation by antonyms 
-- **Flow 8** - multi-wrod grouping (wasn't used in our case due to the high time complexity of method)
-- **Flow 9** - remove urls -> remove hashtags -> remove usernames -> remove emoji -> lematize words
-- **Flow 10** - lower casing -> remove punctuation -> remove numbers -> remove extra white spaces -> lematize words
-- **Flow 11** - remove stop words -> replace negation by antonyms -> lemmatization of words
-- **Flow 12** - remove urls -> remove hashtags -> remove usernames -> remove emoji -> stemming of the words
-- **Flow 13** - lower casing -> remove punctuation -> remove extra white spaces -> stemming of the words 
-- **Flow 14** - remove stop words -> replace negations by antonyms -> stemming of the words
-- **Flow 15** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> word expansion 
-- **Flow 16** - lower casing -> remove punctuation -> remove digits -> remove extra white spaces -> word expansion
-- **Flow 17** - remove stop words -> replace negations by antonyms -> word expansion
-- **Flow 18** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> multiword grouping (wasn't used in our case due to the high time complexity of method)
-- **Flow 19** - lowercasing -> remove punctuation -> remove extra white spaces -> multi word grouping (wasn't used in our case due to the high time complexity of method)
+- **Flow 0**: Without any preprocessing, just pure text tokenized by the pipeline (0 minutes)
+- **Flow 1**: Remove URL → Remove hashtags → Remove usernames → Remove emojis (30 minutes)
+- **Flow 2**: Lowercasing → Remove punctuation → Remove numbers → Remove extra white spaces (10 minutes)
+- **Flow 3**: Remove stop words → Lowercasing → Replace negations by antonyms (2 minutes)
+- **Flow 4**: Lemmatization of words only (1 minute)
+- **Flow 5**: Stemming of words only (10 minutes)
+- **Flow 6**: Expand words and slang (e.g., "lol" → "laughing out loud") (1 minute)
+- **Flow 7**: Replace negation by antonyms (5 minutes)
+- **Flow 8**: Multi-word grouping (not used due to high time complexity, reserved for future work) (6 hours)
+- **Flow 9**: Remove URLs → Remove hashtags → Remove usernames → Remove emojis → Lemmatize words (30 minutes)
+- **Flow 10**: Lowercasing → Remove punctuation → Remove numbers → Remove extra white spaces → Lemmatize words (10 minutes)
+- **Flow 11**: Remove stop words → Replace negation by antonyms → Lemmatization of words (30 minutes)
+- **Flow 12**: Remove URLs → Remove hashtags → Remove usernames → Remove emojis → Stemming of words (30 minutes)
+- **Flow 13**: Lowercasing → Remove punctuation → Remove extra white spaces → Stemming of words (20 minutes)
+- **Flow 14**: Remove stop words → Replace negations by antonyms → Stemming of words (4 minutes)
+- **Flow 15**: Remove URLs → Remove hashtags → Remove usernames → Remove emojis → Word expansion (30 minutes)
+- **Flow 16**: Lowercasing → Remove punctuation → Remove digits → Remove extra white spaces → Word expansion (10 minutes)
+- **Flow 17**: Remove stop words → Replace negations by antonyms → Word expansion (30 minutes)
+- **Flow 18** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> multiword grouping (wasn't used in our case due to the high time complexity of method) (6 hours)
+- **Flow 19** - lowercasing -> remove punctuation -> remove extra white spaces -> multi word grouping (wasn't used in our case due to the high time complexity of method) (6 hours)
 - **Flow 20** - remove stop words -> replace negation by antonyms -> multiword grouping (wasn't used in our case due to the high time complexity of method)
-## Description of files
+## Description of files (6 hours)
 
 - **config.py** - in this file you will have to change the path to your data folder that we use.
 - **functions_preprocessing.py** - this file consists of all functions that we used for preprocessing, there you can find detailed description of what different flows stand for and in which way we did preprocessing of the data.
