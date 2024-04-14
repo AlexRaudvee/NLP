@@ -1,11 +1,18 @@
+import os
+import sys
+
 import pandas as pd
 import plotly.express as px
 
-from config import path_to_data_folder
 from sklearn.utils import shuffle
 from tqdm import tqdm
 
-from functions_preprocessing import flow_preprocessing_1, flow_preprocessing_2, flow_preprocessing_3, flow_preprocessing_4, flow_preprocessing_5, flow_preprocessing_6, flow_preprocessing_7, flow_preprocessing_8, flow_preprocessing_9, flow_preprocessing_10, flow_preprocessing_11, flow_preprocessing_12, flow_preprocessing_13, flow_preprocessing_14, flow_preprocessing_15, flow_preprocessing_16, flow_preprocessing_17, flow_preprocessing_18, flow_preprocessing_19, flow_preprocessing_20, flow_preprocessing_21
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+from config import path_to_data_folder
+from functions.functions_preprocessing import flow_preprocessing_1, flow_preprocessing_2, flow_preprocessing_3, flow_preprocessing_4, flow_preprocessing_5, flow_preprocessing_6, flow_preprocessing_7, flow_preprocessing_8, flow_preprocessing_9, flow_preprocessing_10, flow_preprocessing_11, flow_preprocessing_12, flow_preprocessing_13, flow_preprocessing_14, flow_preprocessing_15, flow_preprocessing_16, flow_preprocessing_17, flow_preprocessing_18, flow_preprocessing_19, flow_preprocessing_20, flow_preprocessing_21
 
 tqdm.pandas()
 
@@ -49,7 +56,7 @@ def avg_num_of_cars(df: pd.DataFrame) -> int:
     '''
     :param df: a data frame with sentences in column "post"
     :type df: a data frame
-    :returns: the average number of carachters in the dataset
+    :returns: the average number of characters in the dataset
     :rtype: int
     '''
     return round(num_of_cars(df)/len(df))

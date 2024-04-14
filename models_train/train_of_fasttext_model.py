@@ -130,4 +130,4 @@ for file_index in range(count_files):
     print(f'{file_index}') # keeps track of models are being created
 
 
-stats_df.to_csv("fasttext_results_raw_model.csv") # convert result data frame to csv for later anaysis
+stats_df.to_csv("results/fasttext_results_raw_model.csv") # convert result data frame to csv for later anaysis

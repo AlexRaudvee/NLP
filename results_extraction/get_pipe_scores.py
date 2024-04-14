@@ -1,4 +1,6 @@
 ### imports 
+import os
+import sys
 import csv
 
 import pandas as pd
@@ -9,13 +11,18 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, precision_score, recall_score
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
 from config import path_to_data_folder
 
 ### LOAD THE MODELS
 word2vec_model = api.load("word2vec-google-news-300") # model trained on lower case words, use lower case tokens
 
 # make neccesary imports for preprocessing and vectorizatio
-from functions_vectorization import TfidfVectorizer, CountVectorizer, Word2VecVectorizer, FastTextVectorizer
+from functions.functions_vectorization import TfidfVectorizer, CountVectorizer, Word2VecVectorizer, FastTextVectorizer
 
 list_of_preprocessed_data = ['gender_df_preprocessed_0', 'gender_df_preprocessed_1', "gender_df_preprocessed_2", 'gender_df_preprocessed_3', 'gender_df_preprocessed_4', 'gender_df_preprocessed_5', 'gender_df_preprocessed_6', 'gender_df_preprocessed_7', 'gender_df_preprocessed_9', 'gender_df_preprocessed_10', 'gender_df_preprocessed_11', 'gender_df_preprocessed_12', 'gender_df_preprocessed_13', 'gender_df_preprocessed_14', 'gender_df_preprocessed_15', 'gender_df_preprocessed_16', 'gender_df_preprocessed_17']
 list_of_vectorizers = [TfidfVectorizer]
@@ -23,7 +30,7 @@ list_of_models = [RandomForestClassifier, LogisticRegression]
 
 
 # PIPELINES COBINATION AND IT'S SCORES FOR GENDER DATA
-df = pd.read_csv('scores.csv', header=None, names=['pipeline_name', 'pipeline_scores'])
+df = pd.read_csv('results/scores.csv', header=None, names=['pipeline_name', 'pipeline_scores'])
 
 # Extract the pipeline names
 finished_ = df['pipeline_name'].tolist()

@@ -42,7 +42,7 @@ For this project we used gender data, which is represented in two columns: post 
 - **Flow 18** - remove urls -> remove hashtags -> remove usernames -> remove emojies -> multiword grouping (wasn't used in our case due to the high time complexity of method) (6 hours)
 - **Flow 19** - lowercasing -> remove punctuation -> remove extra white spaces -> multi word grouping (wasn't used in our case due to the high time complexity of method) (6 hours)
 - **Flow 20** - remove stop words -> replace negation by antonyms -> multiword grouping (wasn't used in our case due to the high time complexity of method)
-## Description of files (6 hours)
+## Description of files 
 
 - **config.py** - in this file you will have to change the path to your data folder that we use.
 - **functions_preprocessing.py** - this file consists of all functions that we used for preprocessing, there you can find detailed description of what different flows stand for and in which way we did preprocessing of the data.

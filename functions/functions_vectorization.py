@@ -1,4 +1,6 @@
 import pickle
+import sys
+import os
 
 import gensim.downloader as api
 import numpy as np
@@ -7,6 +9,11 @@ from fasttext import FastText
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.base import BaseEstimator, TransformerMixin
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
 from config import path_to_fast_text_model
 
 # Loads pre-trained word embedings model:
